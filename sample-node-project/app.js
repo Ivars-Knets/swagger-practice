@@ -1,5 +1,8 @@
 import express from 'express';
 import patientRouter from './routes/patientRouter.js';
+import swaggerUi from 'swagger-ui-express';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 
 const app = express(); 
 app.use(express.json());
@@ -21,6 +24,9 @@ app.use((error, req, res, next) => {
         });
     }
 });
+
+const swaggerDocument = require('./swagger/swaggerDocument.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');

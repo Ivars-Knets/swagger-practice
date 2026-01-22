@@ -1,0 +1,296 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "version": "0.1.0",
+    "title": "Sample Node Projects API",
+    "description": "API routes found in sample-node-project. This is made as a practice for \"Swagger API Documentation\" training. Made by Ivars Knets."
+  },
+  "components": {
+    "schemas": {
+
+      "patient": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Patient object",
+        "description": "Expected patient data.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "UUID",
+            "type": "string"
+          },
+          "patient_id": {
+            "description": "Patients id",
+            "type": "string"
+          },
+          "patient_name": {
+            "description": "Patients name",
+            "type": "string"
+          },
+          "gender": {
+            "description": "Patients gender",
+            "type": "string"
+          },
+          "date_of_birth": {
+            "description": "Patients date of birth",
+            "type": "string"
+          },
+          "visit_date": {
+            "description": "Patients visit date",
+            "type": "string"
+          },
+          "symptoms": {
+            "description": "Patients symptoms",
+            "type": "string"
+          },
+          "diagnosis": {
+            "description": "Doctors diagnosis",
+            "type": "string"
+          },
+          "medication": {
+            "description": "Prescribed medication",
+            "type": "string"
+          },
+          "dosage": {
+            "description": "Prescribed medication dosage",
+            "type": "string"
+          }
+        } 
+      },
+
+      "new_patient": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "New Patient object",
+        "description": "Expected patient data for new patient creation.",
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "description": "Patients id",
+            "type": "string"
+          },
+          "patient_name": {
+            "description": "Patients name",
+            "type": "string"
+          },
+          "gender": {
+            "description": "Patients gender",
+            "type": "string"
+          },
+          "date_of_birth": {
+            "description": "Patients date of birth",
+            "type": "string"
+          },
+          "visit_date": {
+            "description": "Patients visit date",
+            "type": "string"
+          },
+          "symptoms": {
+            "description": "Patients symptoms",
+            "type": "string"
+          },
+          "diagnosis": {
+            "description": "Doctors diagnosis",
+            "type": "string"
+          },
+          "medication": {
+            "description": "Prescribed medication",
+            "type": "string"
+          },
+          "dosage": {
+            "description": "Prescribed medication dosage",
+            "type": "string"
+          }
+        } 
+      }
+
+    },
+    "examples": {
+
+      "patient": {
+        "id": "",
+        "patient_id": "",
+        "patient_name": "Name Surname",
+        "gender": "Non-binary",
+        "date_of_birth": "2000-01-13",
+        "visit_date": "2020-02-14",
+        "symptoms": "Mild Cough",
+        "diagnosis": "Common Cold",
+        "medication": "Water",
+        "dosage": "1-2l a day"            
+      },
+
+      "new_patient": {
+        "patient_id": "",
+        "patient_name": "Name Surname",
+        "gender": "Non-binary",
+        "date_of_birth": "2000-01-13",
+        "visit_date": "2020-02-14",
+        "symptoms": "Mild Cough",
+        "diagnosis": "Common Cold",
+        "medication": "Water",
+        "dosage": "1-2l a day"            
+      }
+
+    }
+  },
+  "servers": [
+    {
+      "url": "localhost:3000/api/v1",
+      "description": "v1 API documentation."
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/patients": {
+      "get": {
+        "summary": "Get a list of all patients.",
+        "description": "Get a full list of all patients in the database.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                  "$id": "https://example.com/patient-list.schema.json",
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "title": "List of patients",
+                  "description": "List of all patients.",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/patient"
+                  }
+
+                },
+                "examples": {
+                  "Example #1": [
+                    {
+                      "$ref": "#/components/examples/patient"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {"description": "No patient found with the provided ID."},
+          "500": {"description": "An internal server error occurred."}
+        }
+      },
+      "post": {
+        "summary": "Add a new patient.",
+        "requestBody": {
+          "description": "Object containing patient data.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/new_patient"
+              },
+              "examples": {
+                "Example #1": {
+                  "$ref":"#/components/examples/new_patient"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "New patient has been added."
+          },
+          "404": {"description": "No patient found with the provided ID."},
+          "500": {"description": "An internal server error occurred."}
+        }
+      }
+    },
+    "/patients/{id}": {
+      "get": {
+        "summary": "Get a specific patient.",
+        "description": "Get a specific patient by through their UUID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/patient"
+                },
+                "examples": {
+                  "Example #1": {
+                    "$ref": "#/components/examples/patient"
+                  }
+                }
+              }
+            }
+          },
+          "404": {"description": "No patient found with the provided ID."},
+          "500": {"description": "An internal server error occurred."}
+        }
+      },
+      "put": {
+        "summary": "Update a patient.",
+        "description": "Update a patients information, specified by their UUID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "description": "Object containing updated patient data.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/patient"
+              },
+              "examples": {
+                "Example #1": {
+                  "$ref":"#/components/examples/patient"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {"description": "No patient found with the provided ID."},
+          "500": {"description": "An internal server error occurred."}
+        }
+      },
+      "delete": {
+        "summary": "Remove a patient.",
+        "description": "Remove a patient, specified by their UUID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Patient entry removed."
+          },
+          "404": {"description": "No patient found with the provided ID."},
+          "500": {"description": "An internal server error occurred."}
+        }
+      }
+    }
+  }
+}

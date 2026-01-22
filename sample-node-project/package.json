@@ -5,13 +5,17 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch app.js"
+    "dev": "node --watch app.js",
+    "swagger-build": "node swagger/auto-gen-swagger.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "express": "^4.19.2",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui": "^5.31.0",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^10.0.0"
   }
 }
