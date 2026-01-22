@@ -20,7 +20,7 @@ async function createNewPatient(patient){
     return newPatient;
 }
 
-async function upadatePatient(id, updatedData){
+async function updatePatient(id, updatedData){
     const patients = await readData();
     const index = patients.findIndex(p => p.id === id);
     if (index === -1) throw new Error('notfound');
@@ -42,6 +42,6 @@ export {
     getAllPatients,
     getPatientById,
     createNewPatient,
-    upadatePatient,
+    updatePatient,
     deletePatient
 }

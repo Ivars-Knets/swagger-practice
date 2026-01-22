@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-import { createNewPatient, getAllPatients, getPatientById, upadatePatient, deletePatient } from '../services/patientService.js';
+import { createNewPatient, getAllPatients, getPatientById, updatePatient, deletePatient } from '../services/patientService.js';
 
 // GET /patients
 router.get('/patients', async (req,res, next) => {
@@ -36,7 +36,7 @@ router.post('/patients', async (req, res, next) => {
 // PUT /patients/:id
 router.put('/patients/:id', async (req, res, next) => {
     try {
-        const updatedPatient = await upadatePatient(req.params.id, req.body);
+        const updatedPatient = await updatePatient(req.params.id, req.body);
         res.status(200).json(updatedPatient);
     } catch(error) {
         next(error);
